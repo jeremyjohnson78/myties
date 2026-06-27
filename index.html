@@ -16,7 +16,7 @@
       --blue:#2563EB;--blue-dark:#1E40AF;--blue-light:#DBEAFE;--blue-pale:#EFF6FF;
       --surface:#F8FAFC;--card:#FFFFFF;--text:#1E293B;--muted:#64748B;
       --border:#E2E8F0;--danger:#EF4444;--green:#16A34A;--orange:#EA580C;
-      --purple:#7C3AED;--radius:12px;
+      --radius:12px;
       --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
       --shadow-md:0 4px 16px rgba(0,0,0,.14);
     }
@@ -28,58 +28,68 @@
     }
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--surface);color:var(--text);min-height:100vh}
 
-    /* ── Login Screen ── */
-    #login-screen{display:none;position:fixed;inset:0;background:linear-gradient(135deg,var(--blue-dark),var(--blue));z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:20px;padding:24px}
-    #login-screen.show{display:flex}
+    /* ── Screens ── */
+    .screen{display:none}
+    .screen.active{display:block}
+
+    /* ── Login ── */
+    #login-screen.active{display:flex;min-height:100vh;background:linear-gradient(135deg,#1E40AF,#2563EB);align-items:center;justify-content:center;padding:24px;flex-direction:column;gap:20px}
     .login-box{background:#fff;border-radius:20px;padding:36px 32px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}
+    .login-logo{font-size:3rem;margin-bottom:8px}
     .login-box h1{font-size:1.5rem;font-weight:700;color:#1E293B;margin-bottom:6px}
-    .login-box p{font-size:.875rem;color:#64748B;margin-bottom:24px}
-    .login-box input{width:100%;padding:11px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.9rem;outline:none;margin-bottom:12px}
+    .login-box p{font-size:.875rem;color:#64748B;margin-bottom:24px;line-height:1.5}
+    .login-box input{width:100%;padding:12px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.9rem;outline:none;margin-bottom:12px;font-family:inherit}
     .login-box input:focus{border-color:#2563EB;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
-    .login-box button{width:100%;padding:11px;background:#2563EB;color:#fff;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer}
-    .login-box button:hover{background:#1E40AF}
-    #login-msg{font-size:.82rem;margin-top:8px;min-height:20px}
+    #btn-login{width:100%;padding:12px;background:#2563EB;color:#fff;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+    #btn-login:hover{background:#1E40AF}
+    #btn-login:disabled{opacity:.6;cursor:not-allowed}
+    #login-msg{font-size:.82rem;margin-top:10px;min-height:20px;line-height:1.5}
     #login-msg.ok{color:#16A34A}
     #login-msg.err{color:#EF4444}
+    .login-debug{margin-top:12px;font-size:.72rem;color:#94A3B8;background:#F8FAFC;border-radius:6px;padding:8px;text-align:left;display:none}
 
-    /* ── Header ── */
+    /* ── App ── */
+    #app-screen.active{display:block}
+
+    /* Header */
     header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(30,64,175,.3)}
     .header-left h1{font-size:1.35rem;font-weight:700;color:#fff;letter-spacing:-.3px}
     .header-left p{font-size:.78rem;color:#BFDBFE;margin-top:2px}
     .header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
     .hdr-icon-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:8px;color:#fff;cursor:pointer;transition:background .15s;flex-shrink:0;position:relative}
     .hdr-icon-btn:hover{background:rgba(255,255,255,.27)}
-    #btn-add{display:flex;align-items:center;gap:6px;height:38px;padding:0 18px;background:#fff;color:var(--blue-dark);border:none;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s}
+    #btn-add{display:flex;align-items:center;gap:6px;height:38px;padding:0 18px;background:#fff;color:var(--blue-dark);border:none;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;font-family:inherit}
     #btn-add:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.18)}
 
-    /* Notification badge */
-    .badge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;font-size:.6rem;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--blue-dark)}
+    /* Badge */
+    .badge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;font-size:.6rem;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #1E40AF}
     .badge.show{display:flex}
 
-    /* ── Tabs ── */
-    #tabs{background:var(--card);border-bottom:1.5px solid var(--border);display:flex;max-width:1300px;margin:0 auto;padding:0 24px;gap:0}
-    .tab-btn{display:flex;align-items:center;gap:6px;padding:12px 16px;font-size:.84rem;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;white-space:nowrap;transition:color .15s}
+    /* Tabs */
+    #tabs{background:var(--card);border-bottom:1.5px solid var(--border);display:flex;padding:0 24px;gap:0;overflow-x:auto;scrollbar-width:none}
+    #tabs::-webkit-scrollbar{display:none}
+    .tab-btn{display:flex;align-items:center;gap:6px;padding:12px 16px;font-size:.84rem;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;white-space:nowrap;transition:color .15s;font-family:inherit}
     .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
     .tab-btn:hover:not(.active){color:var(--text)}
 
-    /* ── Controls ── */
+    /* Controls */
     #controls{max-width:1300px;margin:20px auto 0;padding:0 24px;display:flex;flex-direction:column;gap:10px}
     #search-wrap{position:relative}
     #search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-    #search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--card);color:var(--text);outline:none;transition:border-color .15s}
+    #search{width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--card);color:var(--text);outline:none;font-family:inherit}
     #search:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.14)}
     .filter-row{display:flex;align-items:center;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
     .filter-row::-webkit-scrollbar{display:none}
     .filter-label{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;min-width:62px}
-    .filter-pill{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:.78rem;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s}
+    .filter-pill{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:.78rem;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s;font-family:inherit}
     .filter-pill:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-pale)}
     .filter-pill.active{background:var(--blue);border-color:var(--blue);color:#fff}
     .filter-pill.loan-pill.active{background:var(--orange);border-color:var(--orange)}
     #clear-filters-wrap{display:none}
     #clear-filters-wrap.visible{display:flex;align-items:center}
-    #clear-filters{font-size:.78rem;color:var(--danger);background:none;border:none;cursor:pointer;padding:4px 6px}
+    #clear-filters{font-size:.78rem;color:var(--danger);background:none;border:none;cursor:pointer;padding:4px 6px;font-family:inherit}
 
-    /* ── Stats ── */
+    /* Stats */
     #stats-bar{max-width:1300px;margin:8px auto 0;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
     #stats-text{font-size:.8rem;color:var(--muted)}
     #view-toggle{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0}
@@ -88,7 +98,7 @@
     .view-btn.active{background:var(--blue);color:#fff}
     .view-btn:hover:not(.active){background:var(--blue-pale);color:var(--blue)}
 
-    /* ── Grid ── */
+    /* Grid */
     #grid{max-width:1300px;margin:16px auto 48px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
     #grid.list-view{grid-template-columns:1fr;gap:8px}
     #grid.list-view .card{flex-direction:row;align-items:center}
@@ -99,10 +109,9 @@
     #grid.list-view .card-notes-line{display:none}
     #grid.list-view .card-actions{border-top:none;padding:0 12px 0 0;margin-top:0}
     #empty{display:none;max-width:1300px;margin:60px auto;padding:0 24px;text-align:center}
-    #empty svg{color:var(--blue-light);margin-bottom:14px}
     #empty h3{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
 
-    /* ── Card ── */
+    /* Card */
     .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;border:1.5px solid transparent;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
     .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--blue-light)}
     .card.on-loan{border-color:rgba(234,88,12,.35)}
@@ -110,7 +119,7 @@
     .card-photo{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:var(--blue-pale)}
     .card-photo-placeholder{width:100%;aspect-ratio:3/4;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;color:var(--blue-light)}
     .card-body{padding:11px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
-    .card-title{font-size:.85rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .card-title{font-size:.85rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;overflow:hidden}
     .color-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(0,0,0,.12);flex-shrink:0;display:inline-block}
     .card-tags{display:flex;flex-wrap:wrap;gap:4px}
     .tag{display:inline-block;font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid var(--blue-light);background:var(--blue-pale);color:var(--blue)}
@@ -120,17 +129,16 @@
     .tag.in-stock{background:#F0FDF4;color:#15803D;border-color:#BBF7D0}
     .tag.on-loan{background:#FFF7ED;color:#C2410C;border-color:#FED7AA;font-weight:700}
     .card-notes-line{font-size:.73rem;color:var(--muted);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-    .card-borrower{font-size:.72rem;color:var(--orange);font-weight:600}
     .card-actions{display:flex;gap:6px;padding:8px 12px 10px;border-top:1px solid var(--border);margin-top:auto;flex-wrap:wrap}
-    .card-actions button{display:flex;align-items:center;gap:4px;padding:5px 9px;border-radius:6px;border:1.5px solid var(--border);background:transparent;font-size:.73rem;font-weight:500;cursor:pointer;transition:all .15s}
+    .card-actions button{display:flex;align-items:center;gap:4px;padding:5px 9px;border-radius:6px;border:1.5px solid var(--border);background:transparent;font-size:.73rem;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit}
     .btn-edit{color:var(--blue)}.btn-edit:hover{background:var(--blue-pale);border-color:var(--blue-light)}
     .btn-lend{color:var(--green)}.btn-lend:hover{background:#F0FDF4;border-color:#BBF7D0}
     .btn-return{color:var(--orange)}.btn-return:hover{background:#FFF7ED;border-color:#FED7AA}
     .btn-delete{color:var(--danger);margin-left:auto}.btn-delete:hover{background:#FEF2F2;border-color:#FECACA}
 
-    /* ── Requests panel ── */
-    #requests-panel{display:none;max-width:1300px;margin:20px auto 48px;padding:0 24px}
-    #requests-panel.show{display:block}
+    /* Panels */
+    #requests-panel,#loans-panel{display:none;max-width:1300px;margin:20px auto 48px;padding:0 24px}
+    #requests-panel.show,#loans-panel.show{display:block}
     .req-card{background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border);padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
     .req-photo{width:56px;height:74px;object-fit:cover;border-radius:8px;flex-shrink:0;background:var(--blue-pale)}
     .req-photo-placeholder{width:56px;height:74px;border-radius:8px;flex-shrink:0;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;color:var(--blue-light)}
@@ -140,24 +148,18 @@
     .req-note{font-size:.78rem;color:var(--text);font-style:italic;margin-top:6px;background:var(--surface);padding:6px 10px;border-radius:6px}
     .req-time{font-size:.72rem;color:var(--muted);margin-top:6px}
     .req-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-    .btn-approve{background:var(--green);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:.8rem;font-weight:600;cursor:pointer}
-    .btn-approve:hover{opacity:.88}
-    .btn-decline{background:transparent;color:var(--danger);border:1.5px solid var(--danger);border-radius:8px;padding:7px 16px;font-size:.8rem;font-weight:600;cursor:pointer}
-    .btn-decline:hover{background:#FEF2F2}
-    #req-empty{text-align:center;padding:60px 0;color:var(--muted)}
-    #req-empty svg{color:var(--blue-light);margin-bottom:12px}
-
-    /* ── Loans panel ── */
-    #loans-panel{display:none;max-width:1300px;margin:20px auto 48px;padding:0 24px}
-    #loans-panel.show{display:block}
+    .btn-approve{background:var(--green);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit}
+    .btn-decline{background:transparent;color:var(--danger);border:1.5px solid var(--danger);border-radius:8px;padding:7px 16px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit}
     .loan-card{background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
     .loan-info{flex:1;min-width:0}
     .loan-info h3{font-size:.88rem;font-weight:700}
     .loan-info p{font-size:.78rem;color:var(--muted);margin-top:2px}
-    .btn-mark-returned{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap}
-    .btn-mark-returned:hover{opacity:.88}
+    .btn-mark-returned{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
+    .panel-empty{text-align:center;padding:60px 0;color:var(--muted)}
+    .panel-empty p{font-size:.9rem;font-weight:600}
+    .panel-empty span{font-size:.82rem;display:block;margin-top:4px}
 
-    /* ── Modal shared ── */
+    /* Modal */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:16px}
     .modal-overlay.open{display:flex}
     .modal-box{background:var(--card);border-radius:16px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.28);animation:slide-up .2s ease;display:flex;flex-direction:column;max-height:90vh}
@@ -171,91 +173,77 @@
     .field{display:flex;flex-direction:column;gap:4px}
     .field label{font-size:.78rem;font-weight:600;color:var(--text)}
     .field label span{color:var(--danger)}
-    .field input,.field textarea,.field select{padding:8px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;font-family:inherit;color:var(--text);background:var(--card);outline:none;transition:border-color .15s;resize:none;width:100%}
+    .field input,.field textarea,.field select{padding:8px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;font-family:inherit;color:var(--text);background:var(--card);outline:none;resize:none;width:100%}
     .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
     .field-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
     .field-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px}
-    .btn-primary{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.875rem;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.875rem;font-weight:600;cursor:pointer;font-family:inherit}
     .btn-primary:hover{background:var(--blue-dark)}
-    .btn-cancel{background:var(--card);color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:9px 16px;font-size:.875rem;font-weight:500;cursor:pointer}
-    .btn-cancel:hover{background:var(--surface)}
+    .btn-primary:disabled{opacity:.5;cursor:not-allowed}
+    .btn-cancel{background:var(--card);color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:9px 16px;font-size:.875rem;cursor:pointer;font-family:inherit}
     .photo-preview-box{width:90px;height:120px;border-radius:8px;overflow:hidden;background:var(--blue-pale);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .photo-preview-box img{display:none;width:100%;height:100%;object-fit:cover}
     .photo-preview-box.has-photo{border-style:solid;border-color:var(--blue-light)}
     .photo-preview-box.has-photo img{display:block}
     .photo-preview-box.has-photo svg{display:none}
-    .photo-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:.77rem;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+    .photo-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:.77rem;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit}
     .photo-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-pale)}
     .photo-btn.danger{color:var(--danger)}.photo-btn.danger:hover{border-color:var(--danger);background:#FEF2F2}
 
-    /* footer */
-    footer{text-align:center;padding:16px;font-size:.72rem;color:var(--muted)}
-    footer a{color:var(--blue);text-decoration:none}
-    footer a:hover{text-decoration:underline}
-
-    /* spinner */
-    .spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spinning .7s linear infinite}
-    @keyframes spinning{to{transform:rotate(360deg)}}
-
-    /* toast */
+    /* Toast */
     #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:10px 20px;border-radius:10px;font-size:.84rem;font-weight:500;z-index:9000;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
     #toast.show{opacity:1}
+
+    /* Footer */
+    footer{text-align:center;padding:16px;font-size:.72rem;color:var(--muted)}
+    footer a{color:var(--blue);text-decoration:none}
   </style>
 </head>
 <body>
 
-<!-- Login Screen -->
-<div id="login-screen">
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="login-screen" class="screen active">
   <div class="login-box">
-    <div style="font-size:2.5rem;margin-bottom:8px">👔</div>
+    <div class="login-logo">👔</div>
     <h1>My Ties</h1>
-    <p>Enter your email to receive a login link</p>
-    <input type="email" id="login-email" placeholder="jeremyjohnson78@gmail.com" autocomplete="email"/>
-    <button id="btn-send-link">Send login link</button>
+    <p>Owner login</p>
+    <input type="text" id="login-username" placeholder="Username" autocomplete="username"/>
+    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password"/>
+    <button id="btn-login">Login</button>
     <div id="login-msg"></div>
+    <div class="login-debug" id="login-debug"></div>
   </div>
 </div>
+
+<!-- ══ APP SCREEN ══ -->
+<div id="app-screen" class="screen">
 
 <header>
   <div class="header-left">
     <h1>👔 My Ties</h1>
-    <p id="collection-subtitle">Loading collection…</p>
+    <p id="collection-subtitle">Loading…</p>
   </div>
   <div class="header-right">
     <button class="hdr-icon-btn" id="btn-theme" title="Toggle dark mode">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
     </button>
-    <button class="hdr-icon-btn" id="btn-requests" title="Borrow requests">
+    <button class="hdr-icon-btn" id="btn-requests-hdr" title="Borrow requests">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
       <span class="badge" id="req-badge"></span>
     </button>
     <button class="hdr-icon-btn" id="btn-logout" title="Logout">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
     </button>
-    <button id="btn-add">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Add Tie
-    </button>
+    <button id="btn-add">+ Add Tie</button>
   </div>
 </header>
 
-<!-- Tabs -->
 <div id="tabs">
-  <button class="tab-btn active" data-tab="collection">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-    Collection
-  </button>
-  <button class="tab-btn" data-tab="loans">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-    On Loan
-  </button>
-  <button class="tab-btn" data-tab="requests">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-    Requests
-  </button>
+  <button class="tab-btn active" data-tab="collection">Collection</button>
+  <button class="tab-btn" data-tab="loans">On Loan</button>
+  <button class="tab-btn" data-tab="requests">Requests</button>
 </div>
 
-<!-- Collection controls -->
 <div id="controls">
   <div id="search-wrap">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -268,46 +256,37 @@
     <span class="filter-label">Status</span>
     <button class="filter-pill loan-pill" data-loan="in">In Stock</button>
     <button class="filter-pill loan-pill" data-loan="out">On Loan</button>
-    <div id="clear-filters-wrap"><button id="clear-filters">✕ Clear all</button></div>
+    <div id="clear-filters-wrap"><button id="clear-filters">✕ Clear</button></div>
   </div>
 </div>
 
 <div id="stats-bar">
   <span id="stats-text"></span>
   <div id="view-toggle">
-    <button class="view-btn active" id="btn-grid-view" title="Grid view">
+    <button class="view-btn active" id="btn-grid-view" title="Grid">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
     </button>
-    <button class="view-btn" id="btn-list-view" title="List view">
+    <button class="view-btn" id="btn-list-view" title="List">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
     </button>
   </div>
 </div>
 
-<!-- Ties Grid -->
 <div id="grid"></div>
-<div id="empty">
-  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-  <h3 id="empty-h">No ties yet</h3>
-  <p id="empty-p">Click "Add Tie" to start your collection.</p>
-</div>
+<div id="empty"><h3 id="empty-h">No ties yet</h3><p id="empty-p" style="font-size:.85rem;color:var(--muted);margin-top:6px"></p></div>
 
-<!-- Requests Panel -->
 <div id="requests-panel">
   <div id="req-list"></div>
-  <div id="req-empty" style="display:none">
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-    <p style="margin-top:10px;font-size:.9rem;font-weight:600">All clear!</p>
-    <p style="font-size:.82rem;color:var(--muted);margin-top:4px">No pending borrow requests.</p>
-  </div>
+  <div class="panel-empty" id="req-empty" style="display:none"><p>All clear!</p><span>No pending borrow requests.</span></div>
 </div>
 
-<!-- Loans Panel -->
 <div id="loans-panel">
   <div id="loans-list"></div>
 </div>
 
-<!-- Add/Edit Tie Modal -->
+</div><!-- end app-screen -->
+
+<!-- Add/Edit Modal -->
 <div class="modal-overlay" id="tie-modal">
   <div class="modal-box" style="max-width:500px">
     <div class="modal-head">
@@ -316,32 +295,27 @@
     </div>
     <div class="modal-body">
       <input type="hidden" id="f-id"/>
-      <!-- Photo -->
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div class="photo-preview-box" id="photo-preview-box">
           <img id="photo-preview-img" alt=""/>
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:var(--blue-light)"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px;padding-top:4px">
-          <label class="photo-btn" for="f-photo-file">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-            Upload photo
-            <input type="file" id="f-photo-file" accept="image/*" style="display:none"/>
-          </label>
-          <button class="photo-btn danger" id="btn-clear-photo" style="display:none">Remove photo</button>
+          <label class="photo-btn" for="f-photo-file">📷 Upload photo<input type="file" id="f-photo-file" accept="image/*" style="display:none"/></label>
+          <button class="photo-btn danger" id="btn-clear-photo" style="display:none">🗑 Remove</button>
         </div>
       </div>
       <div class="field-row">
-        <div class="field"><label>Primary Color <span>*</span></label><input id="f-color" list="dl-color" placeholder="e.g. Blue"/><datalist id="dl-color"></datalist></div>
-        <div class="field"><label>Secondary Color</label><input id="f-color2" list="dl-color2" placeholder="optional"/><datalist id="dl-color2"></datalist></div>
+        <div class="field"><label>Color <span>*</span></label><input id="f-color" list="dl-color" placeholder="Blue"/><datalist id="dl-color"></datalist></div>
+        <div class="field"><label>Color 2</label><input id="f-color2" list="dl-color2" placeholder="optional"/><datalist id="dl-color2"></datalist></div>
       </div>
-      <div class="field"><label>Pattern <span>*</span></label><input id="f-pattern" list="dl-pattern" placeholder="e.g. Striped"/><datalist id="dl-pattern"></datalist></div>
+      <div class="field"><label>Pattern <span>*</span></label><input id="f-pattern" list="dl-pattern" placeholder="Striped"/><datalist id="dl-pattern"></datalist></div>
       <div class="field-3col">
         <div class="field"><label>Size</label><input id="f-size" list="dl-size" placeholder="Medium"/><datalist id="dl-size"></datalist></div>
         <div class="field"><label>Occasion</label><input id="f-occasion" list="dl-occasion" placeholder="Formal"/><datalist id="dl-occasion"></datalist></div>
         <div class="field"><label>Condition</label><input id="f-condition" list="dl-condition" placeholder="Good"/><datalist id="dl-condition"></datalist></div>
       </div>
-      <div class="field"><label>Notes</label><textarea id="f-notes" rows="2" placeholder="Any notes about this tie…"></textarea></div>
+      <div class="field"><label>Notes</label><textarea id="f-notes" rows="2" placeholder="Any notes…"></textarea></div>
     </div>
     <div class="modal-foot">
       <button class="btn-cancel" id="tie-cancel-btn">Cancel</button>
@@ -350,7 +324,7 @@
   </div>
 </div>
 
-<!-- Lend Out Modal -->
+<!-- Lend Modal -->
 <div class="modal-overlay" id="loan-modal">
   <div class="modal-box" style="max-width:400px">
     <div class="modal-head">
@@ -361,174 +335,205 @@
       <input type="hidden" id="loan-tie-id"/>
       <p style="font-size:.82rem;color:var(--muted);background:var(--blue-pale);padding:8px 12px;border-radius:8px" id="loan-tie-desc"></p>
       <div class="field"><label>Borrower Name <span>*</span></label><input id="loan-name" placeholder="Full name"/></div>
-      <div class="field"><label>Phone Number</label><input id="loan-phone" type="tel" placeholder="e.g. 012-345-6789"/></div>
+      <div class="field"><label>Phone Number</label><input id="loan-phone" type="tel" placeholder="012-345-6789"/></div>
       <div class="field"><label>Date Borrowed</label><input id="loan-date" type="date"/></div>
     </div>
     <div class="modal-foot">
       <button class="btn-cancel" id="loan-cancel-btn">Cancel</button>
-      <button class="btn-primary" id="loan-save-btn">Confirm Lend Out</button>
+      <button class="btn-primary" id="loan-save-btn">Confirm Lend</button>
     </div>
   </div>
 </div>
 
 <div id="toast"></div>
-
 <footer>Built by <a href="https://tektwv.my" target="_blank">tektwv.my</a></footer>
 
 <script>
 'use strict';
+
+// ── Constants ──
 const API = '/api';
 const TOKEN_KEY = 'myties_token';
 const THEME_KEY = 'myties_theme';
 const VIEW_KEY  = 'myties_view';
-const COLORS     = ['Red','Orange','Yellow','Green','Blue','Purple','Pink','Brown','Gray','Black','White','Navy','Teal','Gold','Silver','Beige','Maroon','Multicolor'];
-const PATTERNS   = ['Solid','Striped','Paisley','Plaid','Geometric','Floral','Dotted','Novelty','Dual Tone','Other'];
-const SIZES      = ['Slim','Medium','Broad'];
-const OCCASIONS  = ['Formal','Business','Casual','Wedding','Other'];
-const CONDITIONS = ['Excellent','Good','Fair','Poor'];
-const COLOR_HEX  = {Red:'#DC2626',Orange:'#EA580C',Yellow:'#CA8A04',Green:'#16A34A',Blue:'#2563EB',Purple:'#7C3AED',Pink:'#DB2777',Brown:'#92400E',Gray:'#6B7280',Black:'#374151',White:'#E2E8F0',Navy:'#1E3A5F',Teal:'#0D9488',Gold:'#B45309',Silver:'#9CA3AF',Beige:'#D4B896',Maroon:'#7F1D1D',Multicolor:'conic-gradient(from 0deg,#DC2626,#2563EB,#16A34A,#CA8A04,#DC2626)'};
+const COLORS    = ['Red','Orange','Yellow','Green','Blue','Purple','Pink','Brown','Gray','Black','White','Navy','Teal','Gold','Silver','Beige','Maroon','Multicolor'];
+const PATTERNS  = ['Solid','Striped','Paisley','Plaid','Geometric','Floral','Dotted','Novelty','Dual Tone','Other'];
+const SIZES     = ['Slim','Medium','Broad'];
+const OCCASIONS = ['Formal','Business','Casual','Wedding','Other'];
+const CONDITIONS= ['Excellent','Good','Fair','Poor'];
+const COLOR_HEX = {Red:'#DC2626',Orange:'#EA580C',Yellow:'#CA8A04',Green:'#16A34A',Blue:'#2563EB',Purple:'#7C3AED',Pink:'#DB2777',Brown:'#92400E',Gray:'#6B7280',Black:'#374151',White:'#E2E8F0',Navy:'#1E3A5F',Teal:'#0D9488',Gold:'#B45309',Silver:'#9CA3AF',Beige:'#D4B896',Maroon:'#7F1D1D',Multicolor:'conic-gradient(from 0deg,#DC2626,#2563EB,#16A34A,#CA8A04,#DC2626)'};
 
+// ── State ──
 let token = localStorage.getItem(TOKEN_KEY) || '';
 let ties = [], filters = {color:'',pattern:'',occasion:'',loan:''}, searchQuery = '';
 let viewMode = localStorage.getItem(VIEW_KEY) || 'grid';
-let pendingFile = null;
-let pollTimer = null;
-
-// ── Auth helpers ──
-function authHeader() { return token ? {'Authorization':'Bearer '+token,'Content-Type':'application/json'} : {'Content-Type':'application/json'}; }
-
-async function checkAuth() {
-  // Handle magic link token in URL
-  const params = new URLSearchParams(location.search);
-  const loginToken = params.get('login');
-  if (loginToken) {
-    const res = await fetch(`${API}/auth.php?action=verify`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:loginToken})});
-    const data = await res.json();
-    if (data.token) {
-      token = data.token;
-      localStorage.setItem(TOKEN_KEY, token);
-      history.replaceState({}, '', '/');
-    }
-  }
-  if (!token) { showLogin(); return false; }
-  try {
-    const res = await fetch(`${API}/auth.php?action=check`, {headers:authHeader()});
-    if (!res.ok) { showLogin(); return false; }
-    return true;
-  } catch { showLogin(); return false; }
-}
-
-function showLogin() { document.getElementById('login-screen').classList.add('show'); }
-function hideLogin() { document.getElementById('login-screen').classList.remove('show'); }
-
-document.getElementById('btn-send-link').addEventListener('click', async () => {
-  const email = document.getElementById('login-email').value.trim();
-  const msg = document.getElementById('login-msg');
-  if (!email) { msg.textContent='Enter your email'; msg.className='err'; return; }
-  const btn = document.getElementById('btn-send-link');
-  btn.disabled = true; btn.textContent = 'Sending…';
-  try {
-    const res = await fetch(`${API}/auth.php?action=request_link`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
-    const data = await res.json();
-    if (data.ok) { msg.textContent = '✓ Link sent! Check your email.'; msg.className = 'ok'; }
-    else { msg.textContent = data.error || 'Error'; msg.className = 'err'; }
-  } catch { msg.textContent = 'Network error'; msg.className = 'err'; }
-  btn.disabled = false; btn.textContent = 'Send login link';
-});
-
-document.getElementById('btn-logout').addEventListener('click', async () => {
-  await fetch(`${API}/auth.php?action=logout`, {method:'POST',headers:authHeader()});
-  localStorage.removeItem(TOKEN_KEY); token = '';
-  showLogin();
-});
-
-// ── Theme ──
-function initTheme() {
-  const dark = localStorage.getItem(THEME_KEY)==='dark'||(localStorage.getItem(THEME_KEY)==null&&matchMedia('(prefers-color-scheme:dark)').matches);
-  applyTheme(dark);
-}
-function applyTheme(dark) {
-  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
-  document.getElementById('btn-theme').innerHTML = dark
-    ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
-    : '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
-}
-document.getElementById('btn-theme').addEventListener('click', () => {
-  const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
-  localStorage.setItem(THEME_KEY, dark?'dark':'light'); applyTheme(dark);
-});
-
-// ── View ──
-function applyView() {
-  document.getElementById('grid').classList.toggle('list-view', viewMode==='list');
-  document.getElementById('btn-grid-view').classList.toggle('active', viewMode==='grid');
-  document.getElementById('btn-list-view').classList.toggle('active', viewMode==='list');
-}
-document.getElementById('btn-grid-view').addEventListener('click',()=>{viewMode='grid';localStorage.setItem(VIEW_KEY,'grid');applyView();});
-document.getElementById('btn-list-view').addEventListener('click',()=>{viewMode='list';localStorage.setItem(VIEW_KEY,'list');applyView();});
-
-// ── Tabs ──
-let activeTab = 'collection';
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeTab = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('controls').style.display = activeTab==='collection' ? '' : 'none';
-    document.getElementById('stats-bar').style.display = activeTab==='collection' ? '' : 'none';
-    document.getElementById('grid').style.display = activeTab==='collection' ? '' : 'none';
-    document.getElementById('empty').style.display = 'none';
-    document.getElementById('requests-panel').classList.toggle('show', activeTab==='requests');
-    document.getElementById('loans-panel').classList.toggle('show', activeTab==='loans');
-    if (activeTab === 'requests') loadRequests();
-    if (activeTab === 'loans') loadLoans();
-  });
-});
+let pendingFile = null, activeTab = 'collection';
 
 // ── Helpers ──
-function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+const $ = id => document.getElementById(id);
+function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function dotStyle(c){const v=COLOR_HEX[c];return v?`background:${v}`:'background:#94A3B8'}
-function toast(msg,dur=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur)}
 function today(){return new Date().toISOString().slice(0,10)}
-function fillDatalist(id,opts){const dl=document.getElementById(id);if(dl)dl.innerHTML=opts.map(o=>`<option value="${esc(o)}">`).join('')}
+function toast(msg,dur=2500){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur)}
+function authH(){return {Authorization:'Bearer '+token,'Content-Type':'application/json'}}
+
+function fillDatalist(id,opts){const dl=$(id);if(dl)dl.innerHTML=opts.map(o=>`<option value="${esc(o)}">`).join('')}
 function initDataLists(){
   fillDatalist('dl-color',COLORS);fillDatalist('dl-color2',COLORS);
   fillDatalist('dl-pattern',PATTERNS);fillDatalist('dl-size',SIZES);
   fillDatalist('dl-occasion',OCCASIONS);fillDatalist('dl-condition',CONDITIONS);
 }
 
+// ── Screens ──
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $(name+'-screen').classList.add('active');
+}
+
+// ── Theme ──
+function initTheme(){
+  const dark=localStorage.getItem(THEME_KEY)==='dark'||(localStorage.getItem(THEME_KEY)==null&&matchMedia('(prefers-color-scheme:dark)').matches);
+  applyTheme(dark);
+}
+function applyTheme(dark){
+  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+  $('btn-theme').innerHTML=dark
+    ?'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
+    :'<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+}
+$('btn-theme').addEventListener('click',()=>{
+  const dark=document.documentElement.getAttribute('data-theme')!=='dark';
+  localStorage.setItem(THEME_KEY,dark?'dark':'light');applyTheme(dark);
+});
+
+// ── Login ──
+async function doLogin() {
+  const username = $('login-username').value.trim();
+  const password = $('login-password').value.trim();
+  const msg = $('login-msg');
+  const dbg = $('login-debug');
+  if(!username||!password){msg.textContent='Enter username and password';msg.className='err';return;}
+  const btn = $('btn-login');
+  btn.disabled=true; btn.textContent='Logging in…';
+  msg.textContent=''; msg.className='';
+  try {
+    const res = await fetch(`${API}/auth.php?action=login`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({username,password})
+    });
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(e) {
+      dbg.style.display='block';
+      dbg.textContent='Server response: '+text.substring(0,300);
+      msg.textContent='Server error — see debug below';msg.className='err';
+      btn.disabled=false;btn.textContent='Login';
+      return;
+    }
+    if(data.ok && data.token){
+      token=data.token;
+      localStorage.setItem(TOKEN_KEY,token);
+      showScreen('app');
+      await loadTies();
+      startPolling();
+    } else {
+      msg.textContent=data.error||'Login failed';msg.className='err';
+    }
+  } catch(e) {
+    msg.textContent='Cannot reach server: '+e.message;msg.className='err';
+    dbg.style.display='block';dbg.textContent='Network error: '+e.message;
+  }
+  btn.disabled=false; btn.textContent='Login';
+}
+
+$('btn-login').addEventListener('click', doLogin);
+$('login-password').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+
+async function tryLogin() {
+  if(!token){ showScreen('login'); return; }
+
+  // Verify existing token is still valid
+  try {
+    const res = await fetch(`${API}/auth.php?action=check`,{headers:authH()});
+    if(res.ok){
+      showScreen('app');
+      await loadTies();
+      startPolling();
+    } else {
+      localStorage.removeItem(TOKEN_KEY); token='';
+      showScreen('login');
+    }
+  } catch(e) {
+    // If can't reach API just show login
+    showScreen('login');
+  }
+}
+
+$('btn-logout').addEventListener('click',async()=>{
+  try{await fetch(`${API}/auth.php?action=logout`,{method:'POST',headers:authH()});}catch(e){}
+  localStorage.removeItem(TOKEN_KEY);token='';showScreen('login');
+});
+
+// ── View ──
+function applyView(){
+  $('grid').classList.toggle('list-view',viewMode==='list');
+  $('btn-grid-view').classList.toggle('active',viewMode==='grid');
+  $('btn-list-view').classList.toggle('active',viewMode==='list');
+}
+$('btn-grid-view').addEventListener('click',()=>{viewMode='grid';localStorage.setItem(VIEW_KEY,'grid');applyView();});
+$('btn-list-view').addEventListener('click',()=>{viewMode='list';localStorage.setItem(VIEW_KEY,'list');applyView();});
+
+// ── Tabs ──
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeTab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    $('controls').style.display=activeTab==='collection'?'':'none';
+    $('stats-bar').style.display=activeTab==='collection'?'':'none';
+    $('grid').style.display=activeTab==='collection'?'':'none';
+    $('empty').style.display='none';
+    $('requests-panel').classList.toggle('show',activeTab==='requests');
+    $('loans-panel').classList.toggle('show',activeTab==='loans');
+    if(activeTab==='requests')loadRequests();
+    if(activeTab==='loans')loadLoans();
+  });
+});
+$('btn-requests-hdr').addEventListener('click',()=>{
+  document.querySelector('[data-tab="requests"]').click();
+});
+
 // ── Load ties ──
-async function loadTies() {
-  const res = await fetch(`${API}/ties.php`, {headers:authHeader()});
-  ties = await res.json();
-  document.getElementById('collection-subtitle').textContent = `${ties.length} tie${ties.length!==1?'s':''} in your collection`;
+async function loadTies(){
+  const res=await fetch(`${API}/ties.php`,{headers:authH()});
+  ties=await res.json();
+  $('collection-subtitle').textContent=`${ties.length} tie${ties.length!==1?'s':''} in your collection`;
   render();
 }
 
-function getFiltered() {
-  const q = searchQuery.toLowerCase();
-  return ties.filter(t => {
-    if(filters.color && t.color !== filters.color) return false;
-    if(filters.pattern && t.pattern !== filters.pattern) return false;
-    if(filters.occasion && t.occasion !== filters.occasion) return false;
-    if(filters.loan && t.loan_status !== filters.loan) return false;
-    if(q && ![t.color,t.color2,t.pattern,t.size,t.occasion,t.condition_,t.notes].join(' ').toLowerCase().includes(q)) return false;
+function getFiltered(){
+  const q=searchQuery.toLowerCase();
+  return ties.filter(t=>{
+    if(filters.color&&t.color!==filters.color)return false;
+    if(filters.pattern&&t.pattern!==filters.pattern)return false;
+    if(filters.occasion&&t.occasion!==filters.occasion)return false;
+    if(filters.loan&&t.loan_status!==filters.loan)return false;
+    if(q&&![t.color,t.color2,t.pattern,t.size,t.occasion,t.condition_,t.notes].join(' ').toLowerCase().includes(q))return false;
     return true;
   });
 }
 
-function renderFilters() {
-  function buildRow(rowId, key, allOpts) {
-    const present = new Set(ties.map(t=>t[key]).filter(Boolean));
-    const row = document.getElementById(rowId);
-    const label = row.querySelector('.filter-label');
-    row.innerHTML=''; row.appendChild(label);
+function renderFilters(){
+  function buildRow(rowId,key,allOpts){
+    const present=new Set(ties.map(t=>t[key]).filter(Boolean));
+    const row=$(rowId),label=row.querySelector('.filter-label');
+    row.innerHTML='';row.appendChild(label);
     allOpts.filter(v=>present.has(v)).forEach(v=>{
-      const btn = document.createElement('button');
-      btn.className = 'filter-pill' + (filters[key]===v?' active':'');
-      btn.dataset.key = key; btn.dataset.val = v;
-      if(key==='color') btn.innerHTML=`<span class="color-dot" style="${dotStyle(v)}"></span>${esc(v)}`;
-      else btn.textContent = v;
+      const btn=document.createElement('button');
+      btn.className='filter-pill'+(filters[key]===v?' active':'');
+      btn.dataset.key=key;btn.dataset.val=v;
+      btn.innerHTML=key==='color'?`<span class="color-dot" style="${dotStyle(v)}"></span>${esc(v)}`:esc(v);
       row.appendChild(btn);
     });
   }
@@ -536,20 +541,19 @@ function renderFilters() {
   buildRow('filter-pattern','pattern',PATTERNS);
   buildRow('filter-occasion','occasion',OCCASIONS);
   document.querySelectorAll('.loan-pill').forEach(p=>p.classList.toggle('active',filters.loan===p.dataset.loan));
-  const any = Object.values(filters).some(Boolean);
-  document.getElementById('clear-filters-wrap').classList.toggle('visible',any);
+  $('clear-filters-wrap').classList.toggle('visible',Object.values(filters).some(Boolean));
 }
 
-function renderTies() {
-  const list = getFiltered(), grid = document.getElementById('grid'), empty = document.getElementById('empty');
-  const stats = document.getElementById('stats-text');
-  if(!list.length){grid.innerHTML='';empty.style.display='block';stats.textContent='';
-    document.getElementById('empty-h').textContent=!Object.values(filters).some(Boolean)&&!searchQuery?'No ties yet':'No ties match your filters';return;}
+function renderTies(){
+  const list=getFiltered(),grid=$('grid'),empty=$('empty');
+  $('stats-text').textContent=list.length===ties.length?`${ties.length} ties`:`Showing ${list.length} of ${ties.length}`;
+  if(!list.length){grid.innerHTML='';empty.style.display='block';
+    $('empty-h').textContent=!Object.values(filters).some(Boolean)&&!searchQuery?'No ties yet':'No ties match your filters';
+    $('empty-p').textContent='';return;}
   empty.style.display='none';
-  stats.textContent=list.length===ties.length?`${ties.length} tie${ties.length!==1?'s':''}`:`Showing ${list.length} of ${ties.length} ties`;
   grid.innerHTML=list.map(t=>{
-    const onLoan=(t.loan_status)==='out';
-    const name=[t.color,t.color2&&t.color2!==t.color?`/ ${t.color2}`:'',t.pattern].filter(Boolean).join(' ');
+    const onLoan=t.loan_status==='out';
+    const name=[t.color,t.color2&&t.color2!==t.color?'/ '+t.color2:'',t.pattern].filter(Boolean).join(' ');
     return `<article class="card${onLoan?' on-loan':''}">
       <div class="card-photo-wrap">
         ${t.photo?`<img class="card-photo" src="${esc(t.photo)}" alt="" loading="lazy"/>`:`<div class="card-photo-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:var(--blue-light)"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></div>`}
@@ -560,238 +564,197 @@ function renderTies() {
           ${t.size?`<span class="tag size">${esc(t.size)}</span>`:''}
           ${t.occasion?`<span class="tag occasion">${esc(t.occasion)}</span>`:''}
           ${t.condition_?`<span class="tag condition">${esc(t.condition_)}</span>`:''}
-          ${onLoan?`<span class="tag on-loan">Out</span>`:`<span class="tag in-stock">In Stock</span>`}
+          ${onLoan?`<span class="tag on-loan">On Loan</span>`:`<span class="tag in-stock">In Stock</span>`}
         </div>
         ${t.notes?`<p class="card-notes-line">${esc(t.notes)}</p>`:''}
       </div>
       <div class="card-actions">
         <button class="btn-edit" onclick="openTieModal(${t.id})">✏️ Edit</button>
-        ${onLoan
-          ?`<button class="btn-return" onclick="openReturnConfirm(${t.id})">↩ Return</button>`
-          :`<button class="btn-lend" onclick="openLoanModal(${t.id})">📤 Lend</button>`}
+        ${onLoan?`<button class="btn-return" onclick="openReturnConfirm(${t.id})">↩ Return</button>`:`<button class="btn-lend" onclick="openLoanModal(${t.id})">📤 Lend</button>`}
         <button class="btn-delete" onclick="deleteTie(${t.id})">🗑</button>
       </div>
     </article>`;
   }).join('');
 }
 
-function render() { if(activeTab==='collection'){renderFilters();renderTies();} }
+function render(){if(activeTab==='collection'){renderFilters();renderTies();}}
 
-// Filter events
 ['filter-color','filter-pattern','filter-occasion'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',e=>{
+  $(id).addEventListener('click',e=>{
     const p=e.target.closest('.filter-pill');if(!p)return;
     const{key,val}=p.dataset;filters[key]=filters[key]===val?'':val;render();
   });
 });
-document.getElementById('filter-loan').addEventListener('click',e=>{
+$('filter-loan').addEventListener('click',e=>{
   const p=e.target.closest('.loan-pill');if(!p)return;
   filters.loan=filters.loan===p.dataset.loan?'':p.dataset.loan;render();
 });
-document.getElementById('clear-filters').addEventListener('click',()=>{filters={color:'',pattern:'',occasion:'',loan:''};render();});
-document.getElementById('search').addEventListener('input',e=>{searchQuery=e.target.value;renderTies();});
+$('clear-filters').addEventListener('click',()=>{filters={color:'',pattern:'',occasion:'',loan:''};render();});
+$('search').addEventListener('input',e=>{searchQuery=e.target.value;renderTies();});
 
-// ── Add / Edit Tie Modal ──
-function openTieModal(id=null) {
-  const tie = id ? ties.find(t=>t.id===id) : null;
-  document.getElementById('tie-modal-title').textContent = tie ? 'Edit Tie' : 'Add Tie';
-  document.getElementById('f-id').value = tie ? tie.id : '';
-  ['color','color2','pattern','size','occasion','notes'].forEach(k=>{ document.getElementById('f-'+k).value = tie?.(tie[k]??''):''; });
-  document.getElementById('f-condition').value = tie?.condition_ || '';
-  pendingFile = null;
-  const img = document.getElementById('photo-preview-img');
-  const box = document.getElementById('photo-preview-box');
-  if(tie?.photo){img.src=tie.photo;img.style.display='block';box.classList.add('has-photo');document.getElementById('btn-clear-photo').style.display='inline-flex';}
-  else{img.src='';img.style.display='none';box.classList.remove('has-photo');document.getElementById('btn-clear-photo').style.display='none';}
-  document.getElementById('tie-modal').classList.add('open');
+// ── Tie Modal ──
+function openTieModal(id=null){
+  const tie=id?ties.find(t=>t.id===id):null;
+  $('tie-modal-title').textContent=tie?'Edit Tie':'Add Tie';
+  $('f-id').value=tie?tie.id:'';
+  $('f-color').value=tie?.color||'';$('f-color2').value=tie?.color2||'';
+  $('f-pattern').value=tie?.pattern||'';$('f-size').value=tie?.size||'';
+  $('f-occasion').value=tie?.occasion||'';$('f-condition').value=tie?.condition_||'';
+  $('f-notes').value=tie?.notes||'';
+  pendingFile=null;
+  const img=$('photo-preview-img'),box=$('photo-preview-box');
+  if(tie?.photo){img.src=tie.photo;img.style.display='block';box.classList.add('has-photo');$('btn-clear-photo').style.display='inline-flex';}
+  else{img.src='';img.style.display='none';box.classList.remove('has-photo');$('btn-clear-photo').style.display='none';}
+  $('tie-modal').classList.add('open');
 }
+function closeTieModal(){$('tie-modal').classList.remove('open');pendingFile=null;}
+$('tie-close-btn').addEventListener('click',closeTieModal);
+$('tie-cancel-btn').addEventListener('click',closeTieModal);
+$('tie-modal').addEventListener('click',e=>{if(e.target===$('tie-modal'))closeTieModal();});
+$('btn-add').addEventListener('click',()=>openTieModal());
 
-function closeTieModal(){document.getElementById('tie-modal').classList.remove('open');pendingFile=null;}
-document.getElementById('tie-close-btn').addEventListener('click',closeTieModal);
-document.getElementById('tie-cancel-btn').addEventListener('click',closeTieModal);
-document.getElementById('tie-modal').addEventListener('click',e=>{if(e.target===document.getElementById('tie-modal'))closeTieModal();});
-document.getElementById('btn-add').addEventListener('click',()=>openTieModal());
-
-document.getElementById('f-photo-file').addEventListener('change',e=>{
-  const f=e.target.files[0];if(!f)return;
-  pendingFile=f;
-  const url=URL.createObjectURL(f);
-  const img=document.getElementById('photo-preview-img');
-  const box=document.getElementById('photo-preview-box');
-  img.src=url;img.style.display='block';box.classList.add('has-photo');
-  document.getElementById('btn-clear-photo').style.display='inline-flex';
+$('f-photo-file').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;pendingFile=f;
+  const url=URL.createObjectURL(f),img=$('photo-preview-img'),box=$('photo-preview-box');
+  img.src=url;img.style.display='block';box.classList.add('has-photo');$('btn-clear-photo').style.display='inline-flex';
   e.target.value='';
 });
-document.getElementById('btn-clear-photo').addEventListener('click',()=>{
-  pendingFile=null;
-  const img=document.getElementById('photo-preview-img');
-  const box=document.getElementById('photo-preview-box');
-  img.src='';img.style.display='none';box.classList.remove('has-photo');
-  document.getElementById('btn-clear-photo').style.display='none';
+$('btn-clear-photo').addEventListener('click',()=>{
+  pendingFile=null;const img=$('photo-preview-img'),box=$('photo-preview-box');
+  img.src='';img.style.display='none';box.classList.remove('has-photo');$('btn-clear-photo').style.display='none';
 });
 
-document.getElementById('tie-save-btn').addEventListener('click', async () => {
-  const color=document.getElementById('f-color').value.trim();
-  const pattern=document.getElementById('f-pattern').value.trim();
+$('tie-save-btn').addEventListener('click',async()=>{
+  const color=$('f-color').value.trim(),pattern=$('f-pattern').value.trim();
   if(!color||!pattern){toast('Color and Pattern are required');return;}
-  const id=document.getElementById('f-id').value;
-  const btn=document.getElementById('tie-save-btn');
-  btn.disabled=true;btn.textContent='Saving…';
-  const body={color,color2:document.getElementById('f-color2').value.trim(),pattern,size:document.getElementById('f-size').value.trim(),occasion:document.getElementById('f-occasion').value.trim(),condition_:document.getElementById('f-condition').value.trim(),notes:document.getElementById('f-notes').value.trim()};
-  try {
-    let res, saved;
-    if(id){res=await fetch(`${API}/ties.php?id=${id}`,{method:'PUT',headers:authHeader(),body:JSON.stringify(body)});}
-    else{res=await fetch(`${API}/ties.php`,{method:'POST',headers:authHeader(),body:JSON.stringify(body)});}
+  const id=$('f-id').value;
+  const btn=$('tie-save-btn');btn.disabled=true;btn.textContent='Saving…';
+  const body={color,color2:$('f-color2').value.trim(),pattern,size:$('f-size').value.trim(),occasion:$('f-occasion').value.trim(),condition_:$('f-condition').value.trim(),notes:$('f-notes').value.trim()};
+  try{
+    let res,saved;
+    if(id){res=await fetch(`${API}/ties.php?id=${id}`,{method:'PUT',headers:authH(),body:JSON.stringify(body)});}
+    else{res=await fetch(`${API}/ties.php`,{method:'POST',headers:authH(),body:JSON.stringify(body)});}
     saved=await res.json();
-    if(pendingFile && saved.id){
+    if(pendingFile&&saved.id){
       const fd=new FormData();fd.append('photo',pendingFile);
-      await fetch(`${API}/photos.php?tie_id=${saved.id}`,{method:'POST',headers:{'Authorization':'Bearer '+token},body:fd});
+      await fetch(`${API}/photos.php?tie_id=${saved.id}`,{method:'POST',headers:{Authorization:'Bearer '+token},body:fd});
     }
-    closeTieModal();await loadTies();toast(id?'Tie updated':'Tie added');
-  } catch(e){toast('Error saving tie');}
+    closeTieModal();await loadTies();toast(id?'Tie updated!':'Tie added!');
+  }catch(e){toast('Error saving tie');}
   btn.disabled=false;btn.textContent='Save Tie';
 });
 
-// ── Delete Tie ──
 async function deleteTie(id){
   if(!confirm('Delete this tie?'))return;
-  await fetch(`${API}/ties.php?id=${id}`,{method:'DELETE',headers:authHeader()});
+  await fetch(`${API}/ties.php?id=${id}`,{method:'DELETE',headers:authH()});
   await loadTies();toast('Tie deleted');
 }
 
 // ── Loan Modal ──
 function openLoanModal(id){
   const tie=ties.find(t=>t.id===id);if(!tie)return;
-  document.getElementById('loan-tie-id').value=id;
-  document.getElementById('loan-tie-desc').textContent=`Lending: ${[tie.color,tie.color2&&tie.color2!==tie.color?'/ '+tie.color2:'',tie.pattern,tie.size].filter(Boolean).join(' ')}`;
-  document.getElementById('loan-name').value='';
-  document.getElementById('loan-phone').value='';
-  document.getElementById('loan-date').value=today();
-  document.getElementById('loan-modal').classList.add('open');
+  $('loan-tie-id').value=id;
+  $('loan-tie-desc').textContent='Lending: '+[tie.color,tie.color2&&tie.color2!==tie.color?'/ '+tie.color2:'',tie.pattern,tie.size].filter(Boolean).join(' ');
+  $('loan-name').value='';$('loan-phone').value='';$('loan-date').value=today();
+  $('loan-modal').classList.add('open');
 }
-function closeLoanModal(){document.getElementById('loan-modal').classList.remove('open');}
-document.getElementById('loan-close-btn').addEventListener('click',closeLoanModal);
-document.getElementById('loan-cancel-btn').addEventListener('click',closeLoanModal);
-document.getElementById('loan-save-btn').addEventListener('click',async()=>{
-  const id=document.getElementById('loan-tie-id').value;
-  const name=document.getElementById('loan-name').value.trim();
-  if(!name){toast('Borrower name required');return;}
-  await fetch(`${API}/loans.php`,{method:'POST',headers:authHeader(),body:JSON.stringify({tie_id:parseInt(id),borrower_name:name,borrower_phone:document.getElementById('loan-phone').value.trim(),date_borrowed:document.getElementById('loan-date').value})});
+function closeLoanModal(){$('loan-modal').classList.remove('open');}
+$('loan-close-btn').addEventListener('click',closeLoanModal);
+$('loan-cancel-btn').addEventListener('click',closeLoanModal);
+$('loan-save-btn').addEventListener('click',async()=>{
+  const id=$('loan-tie-id').value,name=$('loan-name').value.trim();
+  if(!name){toast('Name required');return;}
+  await fetch(`${API}/loans.php`,{method:'POST',headers:authH(),body:JSON.stringify({tie_id:parseInt(id),borrower_name:name,borrower_phone:$('loan-phone').value.trim(),date_borrowed:$('loan-date').value})});
   closeLoanModal();await loadTies();toast('Tie lent out!');
 });
 
 async function openReturnConfirm(tieId){
-  // Find active loan for this tie
-  const res=await fetch(`${API}/loans.php`,{headers:authHeader()});
+  const res=await fetch(`${API}/loans.php`,{headers:authH()});
   const loans=await res.json();
   const loan=loans.find(l=>l.tie_id==tieId&&l.status==='active');
   if(!loan){toast('No active loan found');return;}
   if(!confirm(`Mark ${loan.borrower_name}'s tie as returned?`))return;
-  await fetch(`${API}/loans.php?id=${loan.id}`,{method:'PUT',headers:authHeader(),body:JSON.stringify({})});
-  await loadTies();toast('Tie marked as returned');
+  await fetch(`${API}/loans.php?id=${loan.id}`,{method:'PUT',headers:authH(),body:JSON.stringify({})});
+  await loadTies();toast('Marked as returned!');
 }
 
 // ── Loans Tab ──
 async function loadLoans(){
-  const res=await fetch(`${API}/loans.php`,{headers:authHeader()});
+  const res=await fetch(`${API}/loans.php`,{headers:authH()});
   const loans=await res.json();
   const active=loans.filter(l=>l.status==='active');
-  const container=document.getElementById('loans-list');
-  if(!active.length){container.innerHTML='<div style="text-align:center;padding:60px 0;color:var(--muted)"><p style="font-size:.9rem;font-weight:600">No active loans</p><p style="font-size:.82rem;margin-top:4px">All ties are currently in stock.</p></div>';return;}
-  container.innerHTML=active.map(l=>`
-    <div class="loan-card">
-      <div class="loan-info">
-        <h3>${esc(l.color)}${l.color2?' / '+esc(l.color2):''} ${esc(l.pattern)}</h3>
-        <p>📋 ${esc(l.borrower_name)}${l.borrower_phone?' · '+esc(l.borrower_phone):''}</p>
-        <p>📅 Borrowed: ${l.date_borrowed||'—'}</p>
-      </div>
-      <button class="btn-mark-returned" onclick="markLoanReturned(${l.id})">Mark returned</button>
-    </div>`).join('');
+  const c=$('loans-list');
+  if(!active.length){c.innerHTML='<div class="panel-empty"><p>No active loans</p><span>All ties are currently in stock.</span></div>';return;}
+  c.innerHTML=active.map(l=>`<div class="loan-card"><div class="loan-info"><h3>${esc(l.color)}${l.color2?' / '+esc(l.color2):''} ${esc(l.pattern)}</h3><p>👤 ${esc(l.borrower_name)}${l.borrower_phone?' · '+esc(l.borrower_phone):''}</p><p>📅 ${l.date_borrowed||'—'}</p></div><button class="btn-mark-returned" onclick="markReturned(${l.id})">Mark returned</button></div>`).join('');
 }
-
-async function markLoanReturned(loanId){
+async function markReturned(id){
   if(!confirm('Mark as returned?'))return;
-  await fetch(`${API}/loans.php?id=${loanId}`,{method:'PUT',headers:authHeader(),body:JSON.stringify({})});
+  await fetch(`${API}/loans.php?id=${id}`,{method:'PUT',headers:authH(),body:JSON.stringify({})});
   await loadTies();await loadLoans();toast('Marked as returned!');
 }
+window.markReturned=markReturned;
 
 // ── Requests Tab ──
 async function loadRequests(){
-  const res=await fetch(`${API}/requests.php`,{headers:authHeader()});
+  const res=await fetch(`${API}/requests.php`,{headers:authH()});
   const reqs=await res.json();
-  const list=document.getElementById('req-list');
-  const empty=document.getElementById('req-empty');
+  const list=$('req-list'),empty=$('req-empty');
   if(!reqs.length){list.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
-  list.innerHTML=reqs.map(r=>`
-    <div class="req-card">
-      ${r.photo?`<img class="req-photo" src="${esc(r.photo)}" alt=""/>`:`<div class="req-photo-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:var(--blue-light)"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></div>`}
-      <div class="req-info">
-        <h3>${esc(r.color)}${r.color2?' / '+esc(r.color2):''} ${esc(r.pattern)} — ${esc(r.size)}</h3>
-        <p>👤 ${esc(r.requester_name)}</p>
-        <p>📞 ${esc(r.requester_phone)}</p>
-        ${r.note?`<div class="req-note">"${esc(r.note)}"</div>`:''}
-        <div class="req-time">${new Date(r.created_at).toLocaleString()}</div>
-        <div class="req-actions">
-          <button class="btn-approve" onclick="handleRequest(${r.id},'approve')">✓ Approve</button>
-          <button class="btn-decline" onclick="handleRequest(${r.id},'decline')">✕ Decline</button>
-        </div>
+  list.innerHTML=reqs.map(r=>`<div class="req-card">
+    ${r.photo?`<img class="req-photo" src="${esc(r.photo)}" alt=""/>`:`<div class="req-photo-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:var(--blue-light)"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></div>`}
+    <div class="req-info">
+      <h3>${esc(r.color)}${r.color2?' / '+esc(r.color2):''} ${esc(r.pattern)} · ${esc(r.size)}</h3>
+      <p>👤 ${esc(r.requester_name)}</p><p>📞 ${esc(r.requester_phone)}</p>
+      ${r.note?`<div class="req-note">"${esc(r.note)}"</div>`:''}
+      <div class="req-time">${new Date(r.created_at).toLocaleString()}</div>
+      <div class="req-actions">
+        <button class="btn-approve" onclick="handleRequest(${r.id},'approve')">✓ Approve</button>
+        <button class="btn-decline" onclick="handleRequest(${r.id},'decline')">✕ Decline</button>
       </div>
-    </div>`).join('');
+    </div></div>`).join('');
 }
-
 async function handleRequest(id,action){
-  const label=action==='approve'?'Approve this request?':'Decline this request?';
-  if(!confirm(label))return;
-  await fetch(`${API}/requests.php?id=${id}`,{method:'PUT',headers:authHeader(),body:JSON.stringify({action})});
-  await loadRequests();await loadTies();
-  toast(action==='approve'?'Request approved! Tie marked as on loan.':'Request declined.');
-  await pollBadge();
+  if(!confirm(action==='approve'?'Approve this request?':'Decline this request?'))return;
+  await fetch(`${API}/requests.php?id=${id}`,{method:'PUT',headers:authH(),body:JSON.stringify({action})});
+  await loadRequests();await loadTies();await pollBadge();
+  toast(action==='approve'?'Approved! Tie marked on loan.':'Request declined.');
 }
+window.handleRequest=handleRequest;
 
-// ── Notification badge polling ──
+// ── Badge polling ──
 async function pollBadge(){
   try{
-    const res=await fetch(`${API}/requests.php?action=count`,{headers:authHeader()});
+    const res=await fetch(`${API}/requests.php?action=count`,{headers:authH()});
     const data=await res.json();
-    const badge=document.getElementById('req-badge');
+    const badge=$('req-badge');
     if(data.count>0){badge.textContent=data.count;badge.classList.add('show');}
     else badge.classList.remove('show');
   }catch(e){}
 }
+function startPolling(){pollBadge();setInterval(pollBadge,30000);}
 
-function startPolling(){
-  pollBadge();
-  pollTimer=setInterval(pollBadge,30000);
-}
+// ── Global functions for onclick ──
+window.openTieModal=openTieModal;
+window.openLoanModal=openLoanModal;
+window.openReturnConfirm=openReturnConfirm;
+window.deleteTie=deleteTie;
 
-// ── Init ──
-async function init(){
-  initTheme();applyView();initDataLists();
-  const ok=await checkAuth();
-  if(!ok)return;
-  hideLogin();
-  await loadTies();
-  startPolling();
-}
-
+// ── Keyboard ──
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    if(document.getElementById('tie-modal').classList.contains('open'))closeTieModal();
-    if(document.getElementById('loan-modal').classList.contains('open'))closeLoanModal();
-  }
+  if(e.key!=='Escape')return;
+  if($('tie-modal').classList.contains('open'))closeTieModal();
+  if($('loan-modal').classList.contains('open'))closeLoanModal();
 });
 
-init();
+// ── Init ──
+initTheme();applyView();initDataLists();
+tryLogin();
 </script>
 
 <script>
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('./sw.js')
-      .then(r=>console.log('[SW] registered'))
-      .catch(e=>console.warn('[SW] failed',e));
-  });
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
 </script>
 </body>
